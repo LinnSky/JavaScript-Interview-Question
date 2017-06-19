@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1404.47">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 15.4px; line-height: 28.8px; font: 19.0px 'Songti SC'; color: #111111; -webkit-text-stroke: #111111; background-color: #f5f5d5}
+    p.p2 {margin: 0.0px 0.0px 0.0px 15.4px; line-height: 28.8px; font: 19.0px Consolas; color: #111111; -webkit-text-stroke: #111111}
+    p.p3 {margin: 0.0px 0.0px 0.0px 15.4px; line-height: 28.8px; font: 19.0px 'PingFang SC'; color: #111111; -webkit-text-stroke: #111111}
+    p.p4 {margin: 0.0px 0.0px 0.0px 15.4px; line-height: 28.8px; font: 19.0px Georgia; color: #111111; -webkit-text-stroke: #111111; background-color: #f5f5d5}
+    span.s1 {font-kerning: none}
+    span.s2 {font: 19.0px Georgia; font-kerning: none}
+    span.s3 {font: 19.0px 'PingFang SC'; font-kerning: none; background-color: #f5f2f0; text-shadow: 0.0px 1.0px 0.0px #ffffff}
+    span.s4 {font-kerning: none; background-color: #f5f2f0; text-shadow: 0.0px 1.0px 0.0px #ffffff}
+    span.s5 {font: 19.0px Consolas; font-kerning: none; background-color: #f5f2f0; text-shadow: 0.0px 1.0px 0.0px #ffffff}
+    span.s6 {font: 19.0px 'Songti SC'; font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><b>情况一：纯粹的函数调用</b></span></p>
+<p class="p1"><span class="s1">这是函数的最通常用法，属于全局性调用，因此</span><span class="s2">this</span><span class="s1">就代表全局对象</span><span class="s2">Global</span><span class="s1">。</span></p>
+<p class="p1"><span class="s1">请看下面这段代码，它的运行结果是</span><span class="s2">1</span><span class="s1">。</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">function test(){</span></p>
+<p class="p2"><span class="s3">　　　　</span><span class="s4">this.x = 1;</span></p>
+<p class="p2"><span class="s3">　　　　</span><span class="s4">alert(this.x);</span></p>
+<p class="p3"><span class="s4">　　</span><span class="s5">}</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">test(); // 1</span></p>
+<p class="p1"><span class="s1">为了证明</span><span class="s2">this</span><span class="s1">就是全局对象，我对代码做一些改变：</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">var x = 1;</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">function test(){</span></p>
+<p class="p2"><span class="s3">　　　　</span><span class="s4">alert(this.x);</span></p>
+<p class="p3"><span class="s4">　　</span><span class="s5">}</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">test(); // 1</span></p>
+<p class="p1"><span class="s1">运行结果还是</span><span class="s2">1</span><span class="s1">。再变一下：</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">var x = 1;</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">function test(){</span></p>
+<p class="p2"><span class="s3">　　　　</span><span class="s4">this.x = 0;</span></p>
+<p class="p3"><span class="s4">　　</span><span class="s5">}</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">test();</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">alert(x); //0</span></p>
+<p class="p1"><span class="s1"><b>情况二：作为对象方法的调用</b></span></p>
+<p class="p1"><span class="s1">函数还可以作为某个对象的方法调用，这时</span><span class="s2">this</span><span class="s1">就指这个上级对象。</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">function test(){</span></p>
+<p class="p2"><span class="s3">　　　　</span><span class="s4">alert(this.x);</span></p>
+<p class="p3"><span class="s4">　　</span><span class="s5">}</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">var o = {};</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">o.x = 1;</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">o.m = test;</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">o.m(); // 1</span></p>
+<p class="p1"><span class="s1"><b>情况三</b></span><span class="s2"><b> </b></span><span class="s1"><b>作为构造函数调用</b></span></p>
+<p class="p1"><span class="s1">所谓构造函数，就是通过这个函数生成一个新对象（</span><span class="s2">object</span><span class="s1">）。这时，</span><span class="s2">this</span><span class="s1">就指这个新对象。</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">function test(){</span></p>
+<p class="p2"><span class="s3">　　　　</span><span class="s4">this.x = 1;</span></p>
+<p class="p3"><span class="s4">　　</span><span class="s5">}</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">var o = new test();</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">alert(o.x); // 1</span></p>
+<p class="p1"><span class="s1">运行结果为</span><span class="s2">1</span><span class="s1">。为了表明这时</span><span class="s2">this</span><span class="s1">不是全局对象，我对代码做一些改变：</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">var x = 2;</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">function test(){</span></p>
+<p class="p2"><span class="s3">　　　　</span><span class="s4">this.x = 1;</span></p>
+<p class="p3"><span class="s4">　　</span><span class="s5">}</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">var o = new test();</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">alert(x); //2</span></p>
+<p class="p1"><span class="s1">运行结果为</span><span class="s2">2</span><span class="s1">，表明全局变量</span><span class="s2">x</span><span class="s1">的值根本没变。</span></p>
+<p class="p4"><span class="s6"><b>情况四</b></span><span class="s1"><b> apply</b></span><span class="s6"><b>调用</b></span></p>
+<p class="p1"><span class="s2">apply()</span><span class="s1">是函数对象的一个方法，它的作用是改变函数的调用对象，它的第一个参数就表示改变后的调用这个函数的对象。因此，</span><span class="s2">this</span><span class="s1">指的就是这第一个参数。</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">var x = 0;</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">function test(){</span></p>
+<p class="p2"><span class="s3">　　　　</span><span class="s4">alert(this.x);</span></p>
+<p class="p3"><span class="s4">　　</span><span class="s5">}</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">var o={};</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">o.x = 1;</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">o.m = test;</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">o.m.apply(); //0</span></p>
+<p class="p1"><span class="s2">apply()</span><span class="s1">的参数为空时，默认调用全局对象。因此，这时的运行结果为</span><span class="s2">0</span><span class="s1">，证明</span><span class="s2">this</span><span class="s1">指的是全局对象。</span></p>
+<p class="p1"><span class="s1">如果把最后一行代码修改为</span></p>
+<p class="p2"><span class="s3">　　</span><span class="s4">o.m.apply(o); //1</span></p>
+<p class="p1"><span class="s1">运行结果就变成了</span><span class="s2">1</span><span class="s1">，证明了这时</span><span class="s2">this</span><span class="s1">代表的是对象</span><span class="s2">o</span><span class="s1">。</span></p>
+</body>
+</html>
