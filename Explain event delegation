@@ -1,0 +1,69 @@
+Explain event delegation
+Event delegation allows us to attach a single event listener, to a parent element, that will fire for all descendants matching a selector,
+whether those descendants exist now or are added in the future.
+Example:
+Do not use event delegation
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	window.onload = function(){
+		var oUl = document.getElementById("ul");
+		var aLi = oUl.getElementsByTagName("li");
+
+		for(var i=0; i<aLi.length; i++){
+			aLi[i].onmouseover = function(){
+				this.style.background = "red";
+			}
+			aLi[i].onmouseout = function(){
+				this.style.background = "";
+			}
+		}
+	}
+	</script>
+</head>
+<body>
+	<ul id="ul">
+		<li>aaaaaaaa</li>
+		<li>bbbbbbbb</li>
+		<li>cccccccc</li>
+	</ul>
+</body>
+</html>
+
+use event delegation
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	window.onload = function(){
+		var oUl = document.getElementById("ul");
+		oUl.onmouseover = function(ev){
+			var ev = ev || window.event;
+			var target = ev.target || ev.srcElement;
+			if (target.nodeName.toLowerCase() == "li"){
+				target.style.background = "red";
+			}
+		}
+		oUl.onmouseout = function(ev){
+			var ev = ev || window.event;
+			var target = ev.target || ev.srcElement;
+			if (target.nodeName.toLowerCase() == "li"){
+				target.style.background = "";
+			}
+		}
+	}
+	</script>
+</head>
+<body>
+	<ul id="ul">
+		<li>aaaaaaaa</li>
+		<li>bbbbbbbb</li>
+		<li>cccccccc</li>
+	</ul>
+</body>
+</html>
