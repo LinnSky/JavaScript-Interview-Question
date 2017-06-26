@@ -1,4 +1,4 @@
-情况一：纯粹的函数调用
+情况一：纯粹的函数调用(function context)
 这是函数的最通常用法，属于全局性调用，因此this就代表全局对象Global。
 请看下面这段代码，它的运行结果是1。
 　　function test(){
@@ -19,7 +19,7 @@
 　　}
 　　test();
 　　alert(x); //0
-情况二：作为对象方法的调用
+情况二：作为对象方法的调用(object method)
 函数还可以作为某个对象的方法调用，这时this就指这个上级对象。
 　　function test(){
 　　　　alert(this.x);
@@ -28,7 +28,7 @@
 　　o.x = 1;
 　　o.m = test;
 　　o.m(); // 1
-情况三 作为构造函数调用
+情况三 作为构造函数调用(constructor)
 所谓构造函数，就是通过这个函数生成一个新对象（object）。这时，this就指这个新对象。
 　　function test(){
 　　　　this.x = 1;
